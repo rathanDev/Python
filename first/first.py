@@ -10,10 +10,10 @@ from nltk.tree import ParentedTree
 
 
 # Tree traversal to extrace words that need to be capitalized
-def traverse_my_edit(tree_, sentence_):
+def traverse_my_edit(tree, sentence):
 
     try:
-        tree_.label()
+        tree.label()
 
     except AttributeError:
         print("----------Error")
@@ -21,31 +21,48 @@ def traverse_my_edit(tree_, sentence_):
         return
 
     else:
-        if tree_.height() == 3 and tree_.label() == 'NP':   #child nodes
 
-            for child in tree_:
+        print('I tree ', tree.height(), tree.label())
+        if tree.height() == 3 and tree.label() == 'NP':   #child nodes
 
-                if child.height() == 2 and (child.label() == 'NN' or child.label() == 'NNP'):
-                    leaves = tree_.leaves()
+            sentence = sentence
+            for child in tree:
+
+                print('child', child.height(), child.label())
+                if child.height() == 2 and (child.label() == 'N'):                            #and (child.label() == 'NN' or child.label() == 'NNP'):
+                    leaves = tree.leaves()
                     print('leaves', leaves)
                     for leaf in leaves:
-                        temp_capital = leaf.capitalize()
-                        sentence_ = sentence_.replace(leaf, temp_capital)
-                        print(sentence_)
+                        sentence = sentence.replace(leaf, leaf.title())
 
-                print(sentence_)
+                    print('1', sentence)
 
-            return sentence_
+            print('M tree ', tree.height(), tree.label())
+            print('2', sentence)
+            return sentence
 
-        for child in tree_:
+        print('E tree ', tree.height(), tree.label())
+        print(sentence)
+
+        for child in tree:
             print('child', child)
-            traverse_my_edit(child, sentence_)
+            traverse_my_edit(child, sentence)
+
 
 def main():
 
-    tree = ParentedTree.fromstring('(ROOT (S (NP (JJ Congressional) (NNS representatives)) (VP (VBP are) (VP (VBN motivated) (PP (IN by) (NP (NP (ADJ shiny) (NNS money))))))) (. .))')
+    tree = ParentedTree.fromstring('(S '
+                                   '    (NP Alice) '
+                                   '    (VP '
+                                   '        (V chased) '
+                                   '        (NP '
+                                   '            (Det the) '
+                                   '            (N rabbit)'
+                                   '        )'
+                                   '    )'
+                                   ')')
 
-    sentence = 'Congressional representatives are motivated by shiny money.'
+    sentence = 'Alice chased the rabbit'
 
     res = traverse_my_edit(tree, sentence)
 
