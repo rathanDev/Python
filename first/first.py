@@ -16,6 +16,7 @@ def traverse_my_edit(tree_, sentence_):
         tree_.label()
     except AttributeError:
         print("-------------------exiting method --------------------")
+
         return
 
     else:
