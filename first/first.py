@@ -14,25 +14,31 @@ def traverse_my_edit(tree_, sentence_):
 
     try:
         tree_.label()
+
     except AttributeError:
-        print("-------------------exiting method --------------------")
+        print("----------Error")
 
         return
 
     else:
         if tree_.height() == 3 and tree_.label() == 'NP':   #child nodes
+
             for child in tree_:
+
                 if child.height() == 2 and (child.label() == 'NN' or child.label() == 'NNP'):
                     leaves = tree_.leaves()
-                    print(leaves)
+                    print('leaves', leaves)
                     for leaf in leaves:
                         temp_capital = leaf.capitalize()
-                        sentence_ = sentence_.replace(leaf,temp_capital)
+                        sentence_ = sentence_.replace(leaf, temp_capital)
                         print(sentence_)
+
+                print(sentence_)
+
             return sentence_
 
         for child in tree_:
-            print('------- recursive call -------------')
+            print('child', child)
             traverse_my_edit(child, sentence_)
 
 def main():
