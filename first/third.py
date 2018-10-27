@@ -46,10 +46,14 @@ def traverse_my_edit(tree, sentence):
 
         for child in tree:
             print('re-child', child)
-            traverse_my_edit(child, sentence)
-            print('3', sentence)
 
-        print('4', sentence)
+            if type(child) == str:
+                print ('str child', child)
+                continue
+
+            return traverse_my_edit(child, sentence)
+
+        return sentence
 
     print('5', sentence)
 

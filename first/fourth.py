@@ -3,38 +3,38 @@ from nltk.tree import ParentedTree
 
 def traverse(tree, sentence):
 
-    try:
-        tree.label()
+    print ('tree', tree.height(), tree.label())
 
-    except AttributeError:
-        print ('--Err', sentence, tree)
+    if tree.label() == 'NP':
 
-    print ('tree', sentence, tree.height())
-
-    if tree.height() <= 3:
-        leaves = tree.leaves()
-        print ('leaves', leaves)
-
-        for leaf in leaves:
-            print ('sentence1', sentence)
-            sentence = sentence.replace(leaf, leaf.title())
-            print ('sentence1', sentence)
-
-        print ('sentence2', sentence)
-        return sentence
-
-    else:
         for child in tree:
-            print ('child', sentence, child)
 
-            if type(child) == str:
-                print ('str child', child)
-                continue
+            try:
+                print ('child', child)
+                child.label()
+
+            except AttributeError:
+                print ('err', child)
 
             else:
-                return traverse(child, sentence)
+                leaves = tree.leaves()
+                print('leaves', leaves)
+                for leaf in leaves:
+                    sentence = sentence.replace(leaf, leaf.title())
 
-        return sentence
+                print ('sent', sentence)
+                return sentence
+
+    for child in tree:
+
+        if type(child) == str:
+            print ('str child', child)
+            continue
+
+        return traverse(child, sentence)
+
+    return sentence
+
 
 def main():
 
@@ -54,6 +54,7 @@ def main():
     res = traverse(tree, sentence)
 
     print('res => ', res)
+#     expected output is 'alice chased The Rabbit'
 
 
 main()
