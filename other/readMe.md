@@ -10,7 +10,7 @@ import numpy as np
 np.array(...)
 
 Pandas
-built on top on Numpy
+built on top of Numpy
 for data cleaning and preparation
 has built-in visualization features
 Series, DataFrames, MissingData, GroupBy, Merging-Joining-Concatenating, Operations, DataInputAndOutput
